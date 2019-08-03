@@ -20,21 +20,9 @@ docker run \
     --name airflow \
     --network airflow-network \
     --publish 8080:8080 \
+    --mount type=bind,source="${PROJECT_DIR}/workspace/airflow/dags",target=/home/airflow/dags \
+    --mount type=bind,source="${PROJECT_DIR}/workspace/airflow/plugins",target=/home/airflow/plugins \
     --rm --detach \
     airflow
 
 docker logs -f airflow
-
-
-# docker run \
-#     --name airflow \
-#     --publish 8033:8033 \
-#     --mount type=bind,source="${PROJECT_DIR}/src",target=/app \
-#     --env DB_HOST=jms-db \
-#     --env DB_PORT=5432 \
-#     --env DB_DB=journal_message_store \
-#     --env DB_USER=$DB_USER \
-#     --env DB_PASS=$DB_PASS \
-#     --env NPM_TOKEN=$NPM_TOKEN \
-#     --rm --detach \
-#     jms-api-node-11

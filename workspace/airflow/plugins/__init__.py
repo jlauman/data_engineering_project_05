@@ -7,13 +7,15 @@ import helpers
 
 # Defining the plugin class
 class UdacityPlugin(AirflowPlugin):
-    name = "udacity_plugin"
+    name = "sparkify_plugin"
     operators = [
+        operators.PrepareRedshiftOperator,
         operators.StageToRedshiftOperator,
         operators.LoadFactOperator,
         operators.LoadDimensionOperator,
-        operators.DataQualityOperator
+        operators.DataQualityOperator,
     ]
     helpers = [
-        helpers.SqlQueries
+        helpers.SqlCreates,
+        helpers.SqlQueries,
     ]
