@@ -2,7 +2,13 @@
 
 python TEST_stage_redshift_operator.py run start 2019-08-03
 
-airflow test TEST_sparkify_dag prepare_redshift 2019-08-03 -tp '{"redshift_connection_id": "REDSHIFT_SPARKIFY"}'
+
+airflow test TEST_sparkify_dag prepare_redshift 2019-08-03
+
+airflow test TEST_sparkify_dag stage_events_to_redshift 2019-08-03
+
+airflow test TEST_sparkify_dag stage_songs_to_redshift 2019-08-03
+
 
 
 ## References

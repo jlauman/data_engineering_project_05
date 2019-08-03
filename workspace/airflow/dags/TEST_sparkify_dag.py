@@ -55,13 +55,24 @@ stage_events_to_redshift_task = StageToRedshiftOperator(
     task_id='stage_events_to_redshift',
     params={
         'bucket': 'udacity-dend',
-        'prefix': 'log_data'
+        'prefix': 'log_data',
+        'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+    },
+    dag=dag
+)
+
+stage_songs_to_redshift_task = StageToRedshiftOperator(
+    task_id='stage_songs_to_redshift',
+    params={
+        'bucket': 'udacity-dend',
+        'prefix': 'song_data',
+        'redshift_connection_id': 'REDSHIFT_SPARKIFY',
     },
     dag=dag
 )
 
 # dependencies
-start_task >> prepare_redshift_task >> done_task
+start_task >> prepare_redshift_task >> [stage_events_to_redshift_task, stage_songs_to_redshift_task] >> done_task
 
 
 if __name__ == "__main__":

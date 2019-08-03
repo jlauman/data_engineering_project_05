@@ -8,42 +8,6 @@ class SqlCreates:
         DROP TABLE IF EXISTS public.users;
     """)
 
-    artists = ("""
-        CREATE TABLE IF NOT EXISTS public.artists (
-            artistid varchar(256) NOT NULL,
-            name varchar(256),
-            location varchar(256),
-            lattitude numeric(18,0),
-            longitude numeric(18,0)
-        );
-    """)
-
-    songplays = ("""
-        CREATE TABLE IF NOT EXISTS public.songplays (
-            playid varchar(32) NOT NULL,
-            start_time timestamp NOT NULL,
-            userid int4 NOT NULL,
-            "level" varchar(256),
-            songid varchar(256),
-            artistid varchar(256),
-            sessionid int4,
-            location varchar(256),
-            user_agent varchar(256),
-            CONSTRAINT songplays_pkey PRIMARY KEY (playid)
-        );
-    """)
-
-    songs = ("""
-        CREATE TABLE IF NOT EXISTS public.songs (
-            songid varchar(256) NOT NULL,
-            title varchar(256),
-            artistid varchar(256),
-            "year" int4,
-            duration numeric(18,0),
-            CONSTRAINT songs_pkey PRIMARY KEY (songid)
-        );
-    """)
-
     staging_events = ("""
         CREATE TABLE IF NOT EXISTS public.staging_events (
             artist varchar(256),
@@ -79,6 +43,42 @@ class SqlCreates:
             title varchar(256),
             duration numeric(18,0),
             "year" int4
+        );
+    """)
+
+    artists = ("""
+        CREATE TABLE IF NOT EXISTS public.artists (
+            artistid varchar(256) NOT NULL,
+            name varchar(256),
+            location varchar(256),
+            lattitude numeric(18,0),
+            longitude numeric(18,0)
+        );
+    """)
+
+    songplays = ("""
+        CREATE TABLE IF NOT EXISTS public.songplays (
+            playid varchar(32) NOT NULL,
+            start_time timestamp NOT NULL,
+            userid int4 NOT NULL,
+            "level" varchar(256),
+            songid varchar(256),
+            artistid varchar(256),
+            sessionid int4,
+            location varchar(256),
+            user_agent varchar(256),
+            CONSTRAINT songplays_pkey PRIMARY KEY (playid)
+        );
+    """)
+
+    songs = ("""
+        CREATE TABLE IF NOT EXISTS public.songs (
+            songid varchar(256) NOT NULL,
+            title varchar(256),
+            artistid varchar(256),
+            "year" int4,
+            duration numeric(18,0),
+            CONSTRAINT songs_pkey PRIMARY KEY (songid)
         );
     """)
 
