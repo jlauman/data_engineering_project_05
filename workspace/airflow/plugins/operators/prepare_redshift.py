@@ -20,16 +20,16 @@ class PrepareRedshiftOperator(BaseOperator):
         params = kwargs['params']
         self.log.info('PrepareRedshiftOperator.__init__: params={}'.format(params))
         self.redshift_connection_id = params['redshift_connection_id']
-        self.sql_helper = params['sql_helper']
+        self.sql_class = params['sql_class']
 
     def execute(self, context):
         connection_info = BaseHook.get_connection(self.redshift_connection_id)
         self.log.info('PrepareRedshiftOperator.execute: redshift_connection_id={}'.format(connection_info))
         pg_hook = PostgresHook(self.redshift_connection_id)
-        keys = [k for k in self.sql_helper.__dict__.keys() if not k.startswith('__')]
+        keys = [k for k in self.sql_class.__dict__.keys() if not k.startswith('__')]
         keys.sort()
         for key in keys:
             print('query={}'.format(key))
-            sql = self.sql_helper.__dict__[key]
+            sql = self.sql_class.__dict__[key]
             pg_hook.run(sql, autocommit=True)
         self.log.info('PrepareRedshiftOperator.execute: done')

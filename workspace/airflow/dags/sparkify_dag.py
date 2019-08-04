@@ -46,7 +46,7 @@ prepare_redshift_task = PrepareRedshiftOperator(
     task_id='prepare_redshift',
     params={
         'redshift_connection_id': 'REDSHIFT_SPARKIFY',
-        'sql_helper': SqlCreates,
+        'sql_class': SqlCreates,
     },
     dag=dag
 )
@@ -71,9 +71,27 @@ stage_songs_to_redshift_task = StageToRedshiftOperator(
     dag=dag
 )
 
-# dependencies
-start_task >> prepare_redshift_task >> [stage_events_to_redshift_task, stage_songs_to_redshift_task] >> done_task
+load_user_dimension_table_task = LoadDimensionOperator(
+    task_id='load_user_dimension_table',
+    params={
+        'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+        'sql': SqlQueries.user_table_insert
+    },
+    dag=dag
+)
 
+load_songplays_fact_table_task = LoadFactOperator(
+    task_id='load_songplays_fact_table',
+    params={
+        'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+        'sql': SqlQueries.songplay_table_insert
+    },
+    dag=dag
+)
+
+# dependencies
+#start_task >> prepare_redshift_task >> [stage_events_to_redshift_task, stage_songs_to_redshift_task] >> done_task
+start_task >> done_task
 
 if __name__ == "__main__":
     dag.cli()

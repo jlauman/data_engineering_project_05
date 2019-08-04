@@ -3,12 +3,15 @@
 python TEST_stage_redshift_operator.py run start 2019-08-03
 
 
-airflow test TEST_sparkify_dag prepare_redshift 2019-08-03
+airflow test TEST_sparkify_dag prepare_redshift 2019-08-03;
 
-airflow test TEST_sparkify_dag stage_events_to_redshift 2019-08-03
+airflow test TEST_sparkify_dag stage_events_to_redshift 2019-08-03;
 
-airflow test TEST_sparkify_dag stage_songs_to_redshift 2019-08-03
+airflow test TEST_sparkify_dag stage_songs_to_redshift 2019-08-03;
 
+airflow test TEST_sparkify_dag load_user_dimension_table 2019-08-03;
+
+airflow test TEST_sparkify_dag load_songplays_fact_table_task 2019-08-03;
 
 
 ## References
