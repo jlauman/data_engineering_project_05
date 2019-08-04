@@ -4,6 +4,19 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
 class LoadDimensionOperator(BaseOperator):
+    """Load dimension table using SQL INSERT+SELECT query.
+
+    Parameter keys are: redshift_connection_id, sql
+
+    load_artist_dimension_table_task = LoadDimensionOperator(
+        task_id='load_artist_dimension_table',
+        params={
+            'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+            'sql': SqlQueries.artist_table_insert
+        },
+        dag=dag
+    )
+    """
     ui_color = '#80BD9E'
 
     @apply_defaults

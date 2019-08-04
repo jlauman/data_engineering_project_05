@@ -38,7 +38,7 @@ class SqlQueries:
     """)
 
     song_table_insert = ("""
-        INSERT INTO public.sonts (songid, title, artistid, year, duration)
+        INSERT INTO public.songs (songid, title, artistid, year, duration)
         SELECT distinct song_id, title, artist_id, year, duration
         FROM staging_songs
     """)
@@ -50,8 +50,17 @@ class SqlQueries:
     """)
 
     time_table_insert = ("""
+        INSERT INTO public.times (start_time, hour, day, week, month, year, dayofweek)
         SELECT start_time, extract(hour from start_time), extract(day from start_time), extract(week from start_time),
                extract(month from start_time), extract(year from start_time), extract(dayofweek from start_time)
         FROM songplays
     """)
 
+    data_quality_check = ("""
+        SELECT
+            (SELECT count(*) FROM songplays) AS songplays_count,
+            (SELECT count(*) FROM artists) AS artists_count,
+            (SELECT count(*) FROM songs) AS songs_count,
+            (SELECT count(*) FROM times) AS times_count,
+            (SELECT count(*) FROM users) AS users_count;
+    """)

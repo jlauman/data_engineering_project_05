@@ -14,6 +14,24 @@ from botocore.config import Config
 
 
 class StageToRedshiftOperator(BaseOperator):
+    """Copy S3 bucket records from log_data or song_data to Redshift staging table.
+
+    Parameter keys are: bucket, prefix, redshift_connection_id
+
+    The prefix parameter must be iether "log_data" or "song_data".
+
+    This operator includes record specific logic to load either log_data or song_data.
+
+    stage_events_to_redshift_task = StageToRedshiftOperator(
+        task_id='stage_events_to_redshift',
+        params={
+            'bucket': 'udacity-dend',
+            'prefix': 'log_data',
+            'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+        },
+        dag=dag
+    )
+    """
     ui_color = '#358140'
 
     @apply_defaults

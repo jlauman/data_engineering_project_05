@@ -12,6 +12,22 @@ from botocore.config import Config
 
 
 class PrepareRedshiftOperator(BaseOperator):
+    """Create and truncate fact and dimension tables.
+
+    Parameter keys are: redshift_connection_id, sql_class
+
+    The sql_class parameter is a python class used as a dict
+    to store SQL statements.
+
+    prepare_redshift_task = PrepareRedshiftOperator(
+        task_id='prepare_redshift',
+        params={
+            'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+            'sql_class': SqlCreates,
+        },
+        dag=dag
+    )
+    """
     ui_color = '#358140'
 
     @apply_defaults

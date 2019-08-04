@@ -4,6 +4,19 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
 class LoadFactOperator(BaseOperator):
+    """Load fact table using SQL INSERT+SEELCT query.
+
+    Parameter keys are: redshift_connection_id, sql
+
+    load_songplays_fact_table_task = LoadFactOperator(
+        task_id='load_songplays_fact_table',
+        params={
+            'redshift_connection_id': 'REDSHIFT_SPARKIFY',
+            'sql': SqlQueries.songplay_table_insert
+        },
+        dag=dag
+    )
+    """
     ui_color = '#F98866'
 
     @apply_defaults

@@ -1,10 +1,11 @@
 class SqlCreates:
     aaa_drop = ("""
-        DROP TABLE IF EXISTS public.artists;
-        DROP TABLE IF EXISTS public.songplays;
-        DROP TABLE IF EXISTS public.songs;
         DROP TABLE IF EXISTS public.staging_events;
         DROP TABLE IF EXISTS public.staging_songs;
+        DROP TABLE IF EXISTS public.songplays;
+        DROP TABLE IF EXISTS public.artists;
+        DROP TABLE IF EXISTS public.songs;
+        DROP TABLE IF EXISTS public.times;
         DROP TABLE IF EXISTS public.users;
     """)
 
@@ -82,6 +83,19 @@ class SqlCreates:
         );
     """)
 
+    times = ("""
+        CREATE TABLE IF NOT EXISTS public.times (
+            start_time timestamp NOT NULL,
+            hour int4,
+            day int4,
+            week int4,
+            month int4,
+            year int4,
+            dayofweek int4,
+            CONSTRAINT start_time_pkey PRIMARY KEY (start_time)
+        );
+    """)
+
     users = ("""
         CREATE TABLE IF NOT EXISTS public.users (
             userid int4 NOT NULL,
@@ -94,10 +108,11 @@ class SqlCreates:
     """)
 
     zzz_truncate = ("""
-        TRUNCATE TABLE public.artists;
-        TRUNCATE TABLE public.songplays;
-        TRUNCATE TABLE public.songs;
         TRUNCATE TABLE public.staging_events;
         TRUNCATE TABLE public.staging_songs;
+        TRUNCATE TABLE public.songplays;
+        TRUNCATE TABLE public.artists;
+        TRUNCATE TABLE public.songs;
+        TRUNCATE TABLE public.times;
         TRUNCATE TABLE public.users;
     """)
