@@ -18,16 +18,20 @@ def done_function():
     print('done!')
     return True
 
-args = {
+default_args = {
     'owner': 'jlauman',
     'description': 'Load fact and dimension tables from S3 bucket with log_data and song_data.',
-    'start_date': datetime(2019, 8, 3)
+    'start_date': datetime(2010, 1, 1),
+    'catchup': True,
+    'schedule_interval': '@hourly',
+    'depends_on_past': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
 }
 
 dag = DAG(
     dag_id='sparkify_dag',
-    default_args=args,
-    schedule_interval='@once',
+    default_args=default_args,
     dagrun_timeout=timedelta(minutes=60),
 )
 
